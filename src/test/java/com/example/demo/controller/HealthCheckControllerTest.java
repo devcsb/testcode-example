@@ -23,5 +23,4 @@ class HealthCheckControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/health_check.html"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-
 }

@@ -59,5 +59,4 @@ public class UserRepositoryTest {
         assertThat(result.isEmpty()).isTrue();
     }
 
-
 }

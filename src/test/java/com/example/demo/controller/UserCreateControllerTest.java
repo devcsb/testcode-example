@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @Sql(value = "/sql/delete-all-data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class UserCreateControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -57,5 +58,4 @@ class UserCreateControllerTest {
                 .andExpect(jsonPath("$.nickname").value("jonedoe"))
                 .andExpect(jsonPath("$.status").value(UserStatus.PENDING.toString()));
     }
-
 }
