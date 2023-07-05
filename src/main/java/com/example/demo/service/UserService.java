@@ -61,7 +61,8 @@ public class UserService {
 
     @Transactional
     public void login(long id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Users", id));
         userEntity.setLastLoginAt(Clock.systemUTC().millis());
     }
 
