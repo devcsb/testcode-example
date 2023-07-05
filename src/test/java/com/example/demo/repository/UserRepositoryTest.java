@@ -2,12 +2,10 @@ package com.example.demo.repository;
 
 import com.example.demo.model.UserStatus;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
@@ -16,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 //@ExtendWith(SpringExtension.class) // @DataJpaTest에 내장되어있음.
 @TestPropertySource("classpath:application-test.properties") // 기본 설정을 따르어도 문제 없음.
 @DataJpaTest(showSql = true)
-@Sql("/user-repository-test-data.sql")
+@Sql("/sql/user-repository-test-data.sql")
 public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
