@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     /* get과 find를 구분하기.
-    get은 데이터가 없을 경우 에러를 던지다는 의마가 내포되어있다. */
+    get은 데이터가 없을 경우 에러를 던지다는 의미가 내포되어있다. */
 
     private final UserRepository userRepository;
     private final JavaMailSender mailSender;
