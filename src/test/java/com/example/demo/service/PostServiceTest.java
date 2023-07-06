@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.model.dto.PostCreateDto;
-import com.example.demo.model.dto.PostUpdateDto;
-import com.example.demo.repository.PostEntity;
-import com.example.demo.repository.UserEntity;
+import com.example.demo.post.domain.PostCreate;
+import com.example.demo.post.domain.PostUpdate;
+import com.example.demo.post.infrastructure.PostEntity;
+import com.example.demo.post.service.PostService;
+import com.example.demo.user.infrastructure.UserEntity;
+import com.example.demo.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,15 +40,15 @@ class PostServiceTest {
     }
 
     @Test
-    void PostCreateDto로_게시글을_생성할_수_있다() throws Exception {
+    void postCreate로_게시글을_생성할_수_있다() throws Exception {
         //given
-        PostCreateDto postCreateDto = PostCreateDto.builder()
+        PostCreate postCreate = PostCreate.builder()
                 .writerId(1)
                 .content("someContent")
                 .build();
 
         //when
-        PostEntity postEntity = postService.create(postCreateDto);
+        PostEntity postEntity = postService.create(postCreate);
 
         //then
         Long writerId = postEntity.getWriter().getId();
@@ -62,11 +64,11 @@ class PostServiceTest {
     @Test
     void postUpdateDto로_게시글을_업데이트할_수_있다() throws Exception {
         //given
-        PostUpdateDto postUpdateDto = PostUpdateDto.builder()
+        PostUpdate postUpdate = PostUpdate.builder()
                 .content("modifiedContent")
                 .build();
         //when
-        PostEntity postEntity = postService.update(1, postUpdateDto);
+        PostEntity postEntity = postService.update(1, postUpdate);
 
         //then
         assertThat(postEntity.getContent()).isEqualTo("modifiedContent");
