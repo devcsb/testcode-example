@@ -9,7 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 //@ExtendWith(SpringExtension.class) // @DataJpaTest에 내장되어있음.
 @TestPropertySource("classpath:application-test.properties") // 기본 설정을 따르어도 문제 없음.

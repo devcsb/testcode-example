@@ -1,10 +1,9 @@
 package com.example.demo.post.service;
 
+import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
-import com.example.demo.post.infrastructure.PostEntity;
-import com.example.demo.post.service.PostService;
-import com.example.demo.user.infrastructure.UserEntity;
+import com.example.demo.user.domain.User;
 import com.example.demo.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ class PostServiceTest {
     void 게시글_id로_게시글을_가져올_수_있다() throws Exception {
         //given
         //when
-        PostEntity result = postService.getPostById(1);
+        Post result = postService.getPostById(1);
 
         //then
         assertThat(result.getId()).isNotNull();
@@ -48,17 +47,17 @@ class PostServiceTest {
                 .build();
 
         //when
-        PostEntity postEntity = postService.create(postCreate);
+        Post post = postService.create(postCreate);
 
         //then
-        Long writerId = postEntity.getWriter().getId();
-        UserEntity userEntity = userService.getById(writerId);
-        assertThat(userEntity.getNickname()).isEqualTo(postEntity.getWriter().getNickname());
-        assertThat(userEntity.getLastLoginAt()).isEqualTo(postEntity.getWriter().getLastLoginAt());
+        Long writerId = post.getWriter().getId();
+        User user = userService.getById(writerId);
+        assertThat(user.getNickname()).isEqualTo(post.getWriter().getNickname());
+        assertThat(user.getLastLoginAt()).isEqualTo(post.getWriter().getLastLoginAt());
 
         assertThat(writerId).isEqualTo(1);
-        assertThat(postEntity.getContent()).isEqualTo("someContent");
-        assertThat(postEntity.getCreatedAt()).isGreaterThan(0);
+        assertThat(post.getContent()).isEqualTo("someContent");
+        assertThat(post.getCreatedAt()).isGreaterThan(0);
     }
 
     @Test
@@ -68,10 +67,10 @@ class PostServiceTest {
                 .content("modifiedContent")
                 .build();
         //when
-        PostEntity postEntity = postService.update(1, postUpdate);
+        Post post = postService.update(1, postUpdate);
 
         //then
-        assertThat(postEntity.getContent()).isEqualTo("modifiedContent");
-        assertThat(postEntity.getModifiedAt()).isGreaterThan(0);
+        assertThat(post.getContent()).isEqualTo("modifiedContent");
+        assertThat(post.getModifiedAt()).isGreaterThan(0);
     }
 }
