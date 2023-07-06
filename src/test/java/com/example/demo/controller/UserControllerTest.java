@@ -73,7 +73,6 @@ class UserControllerTest {
         Assertions.assertThat(userEntity.getStatus()).isEqualTo(UserStatus.ACTIVE);
     }
 
-    //TODO 수정
     @Test
     void 사용자는_인증_코드가_일치하지_않을_경우_권한없을_에러를_내려준다() throws Exception {
         //given
