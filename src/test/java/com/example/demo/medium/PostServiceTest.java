@@ -1,8 +1,9 @@
-package com.example.demo.post.service;
+package com.example.demo.medium;
 
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
+import com.example.demo.post.service.PostService;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.service.UserService;
 import org.junit.jupiter.api.Test;
