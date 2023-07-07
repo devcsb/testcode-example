@@ -3,9 +3,9 @@ package com.example.demo.medium;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
-import com.example.demo.post.service.PostService;
+import com.example.demo.post.service.PostServiceImpl;
 import com.example.demo.user.domain.User;
-import com.example.demo.user.service.UserService;
+import com.example.demo.user.service.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,18 +20,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SqlGroup({@Sql(value = "/sql/post-service-test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/delete-all-data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
-class PostServiceTest {
+class PostServiceImplTest {
 
     @Autowired
-    private PostService postService;
+    private PostServiceImpl postServiceImpl;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Test
     void 게시글_id로_게시글을_가져올_수_있다() throws Exception {
         //given
         //when
-        Post result = postService.getPostById(1);
+        Post result = postServiceImpl.getPostById(1);
 
         //then
         assertThat(result.getId()).isNotNull();
@@ -48,11 +48,11 @@ class PostServiceTest {
                 .build();
 
         //when
-        Post post = postService.create(postCreate);
+        Post post = postServiceImpl.create(postCreate);
 
         //then
         Long writerId = post.getWriter().getId();
-        User user = userService.getById(writerId);
+        User user = userServiceImpl.getById(writerId);
         assertThat(user.getNickname()).isEqualTo(post.getWriter().getNickname());
         assertThat(user.getLastLoginAt()).isEqualTo(post.getWriter().getLastLoginAt());
 
@@ -68,7 +68,7 @@ class PostServiceTest {
                 .content("modifiedContent")
                 .build();
         //when
-        Post post = postService.update(1, postUpdate);
+        Post post = postServiceImpl.update(1, postUpdate);
 
         //then
         assertThat(post.getContent()).isEqualTo("modifiedContent");

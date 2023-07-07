@@ -1,20 +1,20 @@
 package com.example.demo.user.service;
 
 import com.example.demo.mock.FakeMailSender;
-import com.example.demo.user.service.port.CertificationService;
+import com.example.demo.user.service.port.CertificationServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CertificationServiceTest {
+public class CertificationServiceImplTest {
 
     @Test
     void 이메일과_컨텐츠가_제대로_만들어져서_보내지는지_테스트한다() throws Exception {
         //given
         FakeMailSender fakeMailSender = new FakeMailSender();
-        CertificationService certificationService = new CertificationService(fakeMailSender);
+        CertificationServiceImpl certificationServiceImpl = new CertificationServiceImpl(fakeMailSender);
 
         //when
-        certificationService.send("devcsb1@gmail.com", 1, "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaab");
+        certificationServiceImpl.send("devcsb1@gmail.com", 1, "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaab");
 
         //then
         Assertions.assertThat(fakeMailSender.email).isEqualTo("devcsb1@gmail.com");

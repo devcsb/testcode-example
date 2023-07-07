@@ -13,15 +13,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PostServiceTest {
+class PostServiceImplTest {
 
-    private PostService postService;
+    private PostServiceImpl postServiceImpl;
 
     @BeforeEach
     void init() {
         FakePostRepository fakePostRepository = new FakePostRepository();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
-        this.postService = PostService.builder()
+        this.postServiceImpl = PostServiceImpl.builder()
                 .postRepository(fakePostRepository)
                 .userRepository(fakeUserRepository)
                 .clockHolder(new TestClockHolder(1678530679919L))
@@ -59,7 +59,7 @@ class PostServiceTest {
     void 게시글_id로_게시글을_가져올_수_있다() throws Exception {
         //given
         //when
-        Post result = postService.getPostById(1);
+        Post result = postServiceImpl.getPostById(1);
 
         //then
         assertThat(result.getId()).isNotNull();
@@ -77,7 +77,7 @@ class PostServiceTest {
                 .build();
 
         //when
-        Post result = postService.create(postCreate);
+        Post result = postServiceImpl.create(postCreate);
 
         //then
         assertThat(result.getId()).isNotNull();
@@ -93,7 +93,7 @@ class PostServiceTest {
                 .content("modifiedContent")
                 .build();
         //when
-        Post post = postService.update(1, postUpdate);
+        Post post = postServiceImpl.update(1, postUpdate);
 
         //then
         assertThat(post.getContent()).isEqualTo("modifiedContent");

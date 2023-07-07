@@ -73,5 +73,4 @@ class PostTest {
         assertThat(post.getCreatedAt()).isEqualTo(1678530679919L);
         assertThat(post.getModifiedAt()).isEqualTo(1678999977779L);
     }
-
 }
