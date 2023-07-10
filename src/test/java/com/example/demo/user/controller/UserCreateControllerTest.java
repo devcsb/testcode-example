@@ -1,38 +1,40 @@
 package com.example.demo.user.controller;
 
+import com.example.demo.mock.TestContainer;
+import com.example.demo.user.controller.response.UserResponse;
 import com.example.demo.user.domain.UserCreate;
 import com.example.demo.user.domain.UserStatus;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
-import org.springframework.http.MediaType;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class UserCreateControllerTest {
 
     @Test
     void 사용자는_회원_가입을_할_수있고_회원가입된_사용자는_PENDING_상태이다() throws Exception {
         //given
+        TestContainer testContainer = TestContainer.builder()
+                .uuidHolder(() -> "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa")
+                .build();
         UserCreate userCreate = UserCreate.builder()
-                .email("test@gmail.com")
-                .nickname("jonedoe")
-                .address("anywhere")
+                .email("devcsb119@gmail.com")
+                .nickname("tester")
+                .address("seoul")
                 .build();
 
-        BDDMockito.doNothing().when(javaMailSender).send(ArgumentMatchers.any(SimpleMailMessage.class));
         //when
+        ResponseEntity<UserResponse> result = testContainer.userCreateController.createUser(userCreate);
+
         //then
-        mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userCreate)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.email").value("test@gmail.com"))
-                .andExpect(jsonPath("$.nickname").value("jonedoe"))
-                .andExpect(jsonPath("$.status").value(UserStatus.PENDING.toString()));
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(result.getBody()).isNotNull();
+        assertThat(result.getBody().getEmail()).isEqualTo("devcsb119@gmail.com");
+        assertThat(result.getBody().getNickname()).isEqualTo("tester");
+        assertThat(result.getBody().getLastLoginAt()).isNull();
+        assertThat(result.getBody().getStatus()).isEqualTo(UserStatus.PENDING);
+        assertThat(testContainer.userRepository.getById(1L).getCertificationCode()).isEqualTo("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa");
+
     }
 }

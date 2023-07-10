@@ -71,7 +71,7 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.content").value("modifiedPostContent"))
                 .andExpect(jsonPath("$.createdAt").value(1678530679919L))
-                .andExpect(jsonPath("$.modifiedAt").isNumber()) //FIXME
+                .andExpect(jsonPath("$.modifiedAt").isNumber())
                 .andExpect(jsonPath("$.writer.id").value(1L))
                 .andExpect(jsonPath("$.writer.email").value("devcsb119@gmail.com"))
                 .andExpect(jsonPath("$.writer.nickname").value("tester"))

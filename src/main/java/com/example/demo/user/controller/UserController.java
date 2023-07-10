@@ -26,7 +26,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserCreateService UserCreateService;
+    private final UserCreateService userCreateService;
     private final UserReadService userReadService;
     private final UserUpdateService userUpdateService;
     private final AuthenticationService authenticationService;
@@ -57,6 +57,8 @@ public class UserController {
     ) {
         User user = userReadService.getByEmail(email);
         authenticationService.login(user.getId());
+        user = userReadService.getByEmail(email);
+
         return ResponseEntity
                 .ok()
                 .body(MyProfileResponse.from(user));
